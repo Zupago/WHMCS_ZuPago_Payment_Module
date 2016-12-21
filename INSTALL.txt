@@ -1,0 +1,7 @@
+To install Perfect Money payment method in your WHMCS follow these instructions:
+
+1. Upload contents of "upload" folder to your web-server to folder where WHMCS is installed.
+
+2. Go to WHMCS Admin Panel > Setup > Payments > Payment Gateways and activate Perfect Money module.
+
+3. Enter all required fields as described there to finish setting up of Perfect Money payment method.
