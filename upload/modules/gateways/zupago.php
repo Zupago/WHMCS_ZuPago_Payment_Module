@@ -25,7 +25,7 @@ function zupago_link($params) {
 	$description = $params["description"];
   $amount = $params['amount']; # Format: ##.##
   $currency = $params['currency']; # Currency Code
- 
+
 	# System Variables
 	$companyname = $params['companyname'];
 	$systemurl = $params['systemurl'];
@@ -43,9 +43,9 @@ function zupago_link($params) {
 <input type="hidden" name="ZUPAYEE_ACC_KEY" value="'.$zupago_pass.'" />
 <input type="hidden" name="CURRENCY_TYPE" value="'.$currency.'" />
 <input type="hidden" name="ZUPAYEE_NAME" value="'.$companyname.'" />
-<input type="hidden" name="SUCCESS_URL" value="'.$systemurl.'/viewinvoice.php?id='.$invoiceid.'" />
+<input type="hidden" name="SUCCESS_URL" value="'.$systemurl.'/viewinvoice.php?id='.$invoiceid.'&paymentsuccess=true" />
 <input type="hidden" name="SUCCESS_URL_METHOD" value="LINK" />
-<input type="hidden" name="CANCEL_URL" value="'.$systemurl.'/viewinvoice.php?id='.$invoiceid.'" />
+<input type="hidden" name="CANCEL_URL" value="'.$systemurl.'/viewinvoice.php?id='.$invoiceid.'&paymentfailed=true" />
 <input type="hidden" name="CANCEL_URL_METHOD" value="LINK" />
 <input type="hidden" name="STATUS_URL" value="'.$systemurl.'/modules/gateways/callback/zupago.php" />
 <input type="submit" value="'.$_LANG['invoicespaynow'].'" />
