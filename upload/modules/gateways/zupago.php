@@ -7,6 +7,11 @@ function zupago_config() {
         "zupago_id" => array("FriendlyName" => "ZuPago Account", "Type" => "text", "Size" => "20", "Description" => "example: ZU-123456"),
         "zupago_id_btc" => array("FriendlyName" => "ZuPago Bitcoin Account", "Type" => "text", "Size" => "20", "Description" => "example: ZB-123456"),
         "zupago_pass" => array("FriendlyName" => "API Key", "Type" => "text", "Size" => "20", "Description" => "Renerate & Enable your APi Key in your ZP account"),
+        'testMode' => array(
+            'FriendlyName' => 'Test Mode',
+            'Type' => 'yesno',
+            'Description' => 'Tick to enable test mode',
+        ),
     );
     return $configarray;
 }
@@ -35,9 +40,26 @@ function zupago_link($params) {
         if ($http[0] == 'http') {
             $systemurl = 'https://' . $http[1];
         }
+    } else if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+        $http = explode('://', $systemurl);
+        if ($http[0] == 'http') {
+            $systemurl = 'https://' . $http[1];
+        }
+    } else if ($_SERVER['HTTPS'] == 'https') {
+        $http = explode('://', $systemurl);
+        if ($http[0] == 'http') {
+            $systemurl = 'https://' . $http[1];
+        }
+    }
+    if ($params['testMode'] == 'on') {
+        $url = 'https://testnet.zupago.pe/api';
+    } else {
+        $url = 'https://zupago.pe/api';
     }
 
-    $code = '<form action="https://zupago.pe/api" method="post">
+
+
+    $code = '<form action="' . $url . '" method="post">
 <input type="hidden" name="SUGGESTED_MEMO" value="' . $description . '">
 
 <input type="hidden" name="PAYMENT_REF" value="' . $invoiceid . '" />
@@ -48,9 +70,7 @@ function zupago_link($params) {
 <input type="hidden" name="CURRENCY_TYPE" value="' . $currency . '" />
 <input type="hidden" name="ZUPAYEE_NAME" value="' . $companyname . '" />
 <input type="hidden" name="SUCCESS_URL" value="' . $systemurl . '/modules/gateways/callback/zupago.php?page=success" />
-<input type="hidden" name="SUCCESS_URL_METHOD" value="LINK" />
 <input type="hidden" name="CANCEL_URL" value="' . $systemurl . '/modules/gateways/callback/zupago.php?page=cancel" />
-<input type="hidden" name="CANCEL_URL_METHOD" value="LINK" />
 <input type="submit" value="' . $_LANG['invoicespaynow'] . '" />
 </form>';
 

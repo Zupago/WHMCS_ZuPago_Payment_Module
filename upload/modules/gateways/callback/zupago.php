@@ -1,4 +1,5 @@
 <?php
+
 include("../../../init.php");
 include("../../../includes/functions.php");
 include("../../../includes/gatewayfunctions.php");
@@ -8,13 +9,13 @@ $GATEWAY = getGatewayVariables($gatewaymodule);
 if (!$GATEWAY["type"])
     die("Module Not Activated");
 
-logTransaction($GATEWAY["name"], $_REQUEST, "Log"); # Save to Gateway Log: name, data array, status
+logTransaction($GATEWAY["name"], $_POST, "Log"); # Save to Gateway Log: name, data array, status
 
 function processPOST($apikey, $amount, $zupayee, $zupayee_btc, $cur) {
 
     $_POST['whmcs_apikey_compare'] = 'CAME: ' . $_POST['ZUPAYEE_ACC_KEY'] . '; WE HAVE: ' . $apikey;
     $_POST['whmcs_amount_compare'] = 'CAME: ' . $_POST['PAYMENT_AMOUNT'] . '; WE HAVE: ' . $amount;
-    $_POST['whmcs_zupayee_compare'] = 'CAME: ' . $_POST['ZUPAYEE_ACC'] . '; WE HAVE: ' . $uzpayee;
+    $_POST['whmcs_zupayee_compare'] = 'CAME: ' . $_POST['ZUPAYEE_ACC'] . '; WE HAVE: ' . $zupayee;
     $_POST['whmcs_zupayee_btc_compare'] = 'CAME: ' . $_POST['ZUPAYEE_ACC_BTC'] . '; WE HAVE: ' . $zupayee_btc;
     $_POST['whmcs_currency_compare'] = 'CAME: ' . $_POST['CURRENCY_TYPE'] . '; WE HAVE: ' . $cur;
 }
