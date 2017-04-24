@@ -4,4 +4,6 @@ To install Perfect Money payment method in your WHMCS follow these instructions:
 
 2. Go to WHMCS Admin Panel > Setup > Payments > Payment Gateways and activate Perfect Money module.
 
-3. Enter all required fields as described there to finish setting up of Perfect Money payment method.
+3. Enter all required fields as described there to finish setting up of ZuPago HyBrid (HD) Wallet payment method.
+
+4. For any issue https://zupago.pe/contact-us
