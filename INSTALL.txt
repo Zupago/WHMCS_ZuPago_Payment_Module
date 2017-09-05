@@ -7,3 +7,5 @@ To install Perfect Money payment method in your WHMCS follow these instructions:
 3. Enter all required fields as described there to finish setting up of ZuPago HyBrid (HD) Wallet payment method.
 
 4. For any issue https://zupago.pe/contact-us
+
+ZuPago WHMCS Modules Now Support Bitcoin Cash (BCC/BCH)
