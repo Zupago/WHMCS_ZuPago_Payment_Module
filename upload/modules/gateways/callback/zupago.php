@@ -11,12 +11,13 @@ if (!$GATEWAY["type"])
 
 logTransaction($GATEWAY["name"], $_POST, "Log"); # Save to Gateway Log: name, data array, status
 
-function processPOST($apikey, $amount, $zupayee, $zupayee_btc, $cur) {
+function processPOST($apikey, $amount, $zupayee, $zupayee_btc, $zupayee_bcc, $cur) {
 
     $_POST['whmcs_apikey_compare'] = 'CAME: ' . $_POST['ZUPAYEE_ACC_KEY'] . '; WE HAVE: ' . $apikey;
     $_POST['whmcs_amount_compare'] = 'CAME: ' . $_POST['PAYMENT_AMOUNT'] . '; WE HAVE: ' . $amount;
     $_POST['whmcs_zupayee_compare'] = 'CAME: ' . $_POST['ZUPAYEE_ACC'] . '; WE HAVE: ' . $zupayee;
     $_POST['whmcs_zupayee_btc_compare'] = 'CAME: ' . $_POST['ZUPAYEE_ACC_BTC'] . '; WE HAVE: ' . $zupayee_btc;
+    $_POST['whmcs_zupayee_bcc_compare'] = 'CAME: ' . $_POST['ZUPAYEE_ACC_BCC'] . '; WE HAVE: ' . $zupayee_bcc;
     $_POST['whmcs_currency_compare'] = 'CAME: ' . $_POST['CURRENCY_TYPE'] . '; WE HAVE: ' . $cur;
 }
 
@@ -56,20 +57,20 @@ if ($_REQUEST['page'] == 'cancel') {
             }
 
 
-        if ($_POST['PAYMENT_AMOUNT'] == $data['total'] && ($_POST['ZUPAYEE_ACC'] == $GATEWAY['zupago_id'] || $_POST['ZUPAYEE_ACC_BTC'] == $GATEWAY['zupago_id_btc']) && $_POST['CURRENCY_TYPE'] == $data['currency_code']) {
+        if ($_POST['PAYMENT_AMOUNT'] == $data['total'] && ($_POST['ZUPAYEE_ACC'] == $GATEWAY['zupago_id'] || $_POST['ZUPAYEE_ACC_BTC'] == $GATEWAY['zupago_id_btc'] || $_POST['ZUPAYEE_ACC_BCC'] == $GATEWAY['zupago_id_bcc']) && $_POST['CURRENCY_TYPE'] == $data['currency_code']) {
 
             addInvoicePayment($invoiceid, $_POST['tokan'], $order_amount, $fee, $gatewaymodule); # Apply Payment to Invoice: invoiceid, transactionid, amount paid, fees, modulename
-            processPOST($apikey, $data['total'], $GATEWAY['zupago_id'], $GATEWAY['zupago_id_btc'], $data['currency_code']);
+            processPOST($apikey, $data['total'], $GATEWAY['zupago_id'], $GATEWAY['zupago_id_btc'], $GATEWAY['zupago_id_bcc'], $data['currency_code']);
             logTransaction($GATEWAY["name"], $_POST, "Successful"); # Save to Gateway Log: name, data array, status
             $paymentSuccess = true;
         } else { // you can also save invalid payments for debug purposes
-            processPOST($apikey, $data['total'], $GATEWAY['zupago_id'], $GATEWAY['zupago_id_btc'], $data['currency_code']);
+            processPOST($apikey, $data['total'], $GATEWAY['zupago_id'], $GATEWAY['zupago_id_btc'],  $GATEWAY['zupago_id_bcc'], $data['currency_code']);
             logTransaction($GATEWAY["name"], $_POST, "Fake Data");
             $paymentSuccess = false;
         }
     } else {
         $paymentSuccess = false;
-        processPOST($apikey, 'not defined', $GATEWAY['zupago_id'], $GATEWAY['zupago_id_btc'], $data['currency_code']);
+        processPOST($apikey, 'not defined', $GATEWAY['zupago_id'], $GATEWAY['zupago_id_btc'], $GATEWAY['zupago_id_bcc'], $data['currency_code']);
         logTransaction($GATEWAY["name"], $_POST, "Unsuccessful"); # Save to Gateway Log: name, data array, status
     }
 }

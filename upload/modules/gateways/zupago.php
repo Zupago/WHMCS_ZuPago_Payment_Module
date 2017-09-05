@@ -6,6 +6,7 @@ function zupago_config() {
         "FriendlyName" => array("Type" => "System", "Value" => "ZuPago HyBrid (HD) Wallet"),
         "zupago_id" => array("FriendlyName" => "ZuPago Account", "Type" => "text", "Size" => "20", "Description" => "example: ZU-123456"),
         "zupago_id_btc" => array("FriendlyName" => "ZuPago Bitcoin Account", "Type" => "text", "Size" => "20", "Description" => "example: ZB-123456"),
+        "zupago_id_bcc" => array("FriendlyName" => "ZuPago Bitcoin-Cash Account", "Type" => "text", "Size" => "20", "Description" => "example: ZBC-123456"),
         "zupago_pass" => array("FriendlyName" => "API Key", "Type" => "text", "Size" => "20", "Description" => "Renerate & Enable your APi Key in your ZP account"),
         'testMode' => array(
             'FriendlyName' => 'Test Mode',
@@ -23,6 +24,7 @@ function zupago_link($params) {
     # Gateway Specific Variables
     $zupago_id = $params['zupago_id'];
     $zupago_id_btc = $params['zupago_id_btc'];
+    $zupago_id_bcc = $params['zupago_id_bcc'];
     $zupago_pass = $params['zupago_pass'];
     # Invoice Variables
     $invoiceid = $params['invoiceid'];
@@ -66,6 +68,7 @@ function zupago_link($params) {
 <input type="hidden" name="PAYMENT_AMOUNT" value="' . $amount . '" />
 <input type="hidden" name="ZUPAYEE_ACC" value="' . $zupago_id . '" />
 <input type="hidden" name="ZUPAYEE_ACC_BTC" value="' . $zupago_id_btc . '" />
+<input type="hidden" name="ZUPAYEE_ACC_BCC" value="' . $zupago_id_bcc . '" />
 <input type="hidden" name="ZUPAYEE_ACC_KEY" value="' . $zupago_pass . '" />
 <input type="hidden" name="CURRENCY_TYPE" value="' . $currency . '" />
 <input type="hidden" name="ZUPAYEE_NAME" value="' . $companyname . '" />
